@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-    
+# -*- coding: utf-8 -*-
 from src.logger import logger, loggerMapClicked
 from cv2 import cv2
 from os import listdir
@@ -357,7 +357,7 @@ def login():
     if not clickBtn(images['select-wallet-1-no-hover'], ):
         if clickBtn(images['select-wallet-1-hover'], threshold = ct['select_wallet_buttons'] ):
             pass
-            # o ideal era que ele alternasse entre checar cada um dos 2 por um tempo 
+            # o ideal era que ele alternasse entre checar cada um dos 2 por um tempo
             # print('sleep in case there is no metamask text removed')
             # time.sleep(20)
     else:
@@ -451,6 +451,9 @@ def refreshHeroes():
     logger('💪 {} heroes sent to work'.format(hero_clicks))
     goToGame()
 
+def refresh_page():
+    logger('🔃 Refreshing page')
+    pyautogui.hotkey('ctrl', 'shift', 'r')
 
 def main():
     """Main execution setup and loop"""
@@ -477,11 +480,12 @@ def main():
     t = c['time_intervals']
 
     last = {
-    "login" : 0,
-    "heroes" : 0,
-    "new_map" : 0,
-    "check_for_captcha" : 0,
-    "refresh_heroes" : 0
+        "login": 0,
+        "heroes": 0,
+        "new_map": 0,
+        "check_for_captcha": 0,
+        "refresh_heroes": 0,
+        "refresh_page": time.time()
     }
     # =========
 
@@ -510,6 +514,10 @@ def main():
         if now - last["refresh_heroes"] > addRandomness( t['refresh_heroes_positions'] * 60):
             last["refresh_heroes"] = now
             refreshHeroesPositions()
+
+        if now - last["refresh_page"] > addRandomness( t['interval_refresh_page'] * 60):
+            last["refresh_page"] = now
+            refresh_page()
 
         #clickBtn(teasureHunt)
         logger(None, progress_indicator=True)
