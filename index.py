@@ -518,6 +518,7 @@ def main():
         if now - last["refresh_page"] > addRandomness( t['interval_refresh_page'] * 60):
             last["refresh_page"] = now
             refresh_page()
+            login()
 
         #clickBtn(teasureHunt)
         logger(None, progress_indicator=True)
