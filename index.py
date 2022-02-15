@@ -321,10 +321,8 @@ def goToGame():
 def refreshHeroesPositions():
 
     logger('🔃 Refreshing Heroes Positions')
-    clickBtn(images['go-back-arrow'])
-    clickBtn(images['treasure-hunt-icon'])
-
-    # time.sleep(3)
+    clickBtn(images['btn-chest'])
+    clickBtn(images['x'])
     clickBtn(images['treasure-hunt-icon'])
 
 def login():
