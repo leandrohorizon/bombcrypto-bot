@@ -335,7 +335,9 @@ def login():
         pyautogui.hotkey('ctrl','f5')
         return
 
-    if clickBtn(images['connect-wallet'], timeout = 10):
+    clickBtn(images['connect-wallet'], timeout = 10)
+
+    if clickBtn(images['btn-meta-mask'], timeout = 10):
         logger('🎉 Connect wallet button detected, logging in!')
         login_attempts = login_attempts + 1
         #TODO mto ele da erro e poco o botao n abre
@@ -490,21 +492,19 @@ def main():
     while True:
         now = time.time()
 
-        if now - last["check_for_captcha"] > addRandomness(t['check_for_captcha'] * 60):
-            last["check_for_captcha"] = now
-
         if now - last["heroes"] > addRandomness(t['send_heroes_for_work'] * 60):
             last["refresh_heroes"] = now
             last["heroes"] = now
             refreshHeroes()
 
-        if now - last["login"] > addRandomness(t['check_for_login'] * 60):
+        if now - last["login"] > addRandomness(t['check_for_login']):
             last["refresh_heroes"] = now
             sys.stdout.flush()
             last["login"] = now
             login()
 
         if now - last["new_map"] > t['check_for_new_map_button']:
+            last["refresh_heroes"] = now
             last["new_map"] = now
 
             if clickBtn(images['new-map']):
@@ -516,6 +516,7 @@ def main():
             refreshHeroesPositions()
 
         if now - last["refresh_page"] > addRandomness( t['interval_refresh_page'] * 60):
+            last["refresh_heroes"] = now
             last["refresh_page"] = now
             refresh_page()
             login()
